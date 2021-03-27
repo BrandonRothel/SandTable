@@ -36,23 +36,19 @@ void setup() {
 }
 
 int calibrateY(){
-  digitalWrite(yDir, 1);
   for(int i = 0; i<yMax; i++){
     if (digitalRead(yLimit) == 0){
       delay(3); //This delay and double check, filters out noise from stepper motors
       if (digitalRead(yLimit) == 0){
         Serial.println("Y Calibration Successful!");
       yVal = 0;
-      stepY(yMax/2, 0);
+      stepY(yMax/2, 1);
       return 1;
       }
       
     }
     Serial.println(digitalRead(yLimit));
-    digitalWrite(yStep, 1);
-    delay(delayAmount);
-    digitalWrite(yStep, 0);
-    delay(delayAmount);
+    stepY(1, 0);
   }
   Serial.println("Calibration Failed...");
   while(1){};
@@ -60,7 +56,6 @@ int calibrateY(){
 }
 
 int calibrateX(){
-  digitalWrite(xDir, 0);
   for(int i = 0; i<xMax; i++){
     if (digitalRead(xLimit) == 0){
       Serial.println("X Calibration Successful!");
@@ -68,10 +63,7 @@ int calibrateX(){
       stepX(xMax/2, 1);
       return 1;
     }
-    digitalWrite(xStep, 1);
-    delay(delayAmount);
-    digitalWrite(xStep, 0);
-    delay(delayAmount);
+    stepX(1, 0);
   }
   Serial.println("Calibration Failed...");
   while(1){};
