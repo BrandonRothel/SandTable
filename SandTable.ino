@@ -12,8 +12,8 @@ int yVal = 0;
 int xVal = 0;
 
 //TODO: Find x and y max steps
-int yMax = 20700;
-int xMax = 20700;
+int yMax = 20850;
+int xMax = 21300;
 
 void setup() { 
   pinMode(yEnable, OUTPUT);
@@ -43,7 +43,7 @@ int calibrateY(){
       if (digitalRead(yLimit) == 0){
         Serial.println("Y Calibration Successful!");
       yVal = 0;
-      //stepY(yMax/2, 1);
+      stepY(yMax/2, 0);
       return 1;
       }
       
@@ -65,7 +65,7 @@ int calibrateX(){
     if (digitalRead(xLimit) == 0){
       Serial.println("X Calibration Successful!");
       xVal = 0;
-      //stepX(xMax/2, 1);
+      stepX(xMax/2, 1);
       return 1;
     }
     digitalWrite(xStep, 1);
@@ -109,11 +109,17 @@ int stepX(int steps, int dir){
       }
 }
 
+int goToCoords(int xVal, int yVal){
+  
+}
+
 void loop() {
-  //calibrateX();
-  //calibrateY();
-  stepX(1800, 1);
-  stepY(1800, 0);
+  calibrateX();
+  calibrateY();
+  //stepX(1800, 1);
+  //stepY(1800, 0);
+  //stepX(1800, 0);
+  //stepY(1800, 1);
   //stepX(212500,1);
   
   while(1){}
