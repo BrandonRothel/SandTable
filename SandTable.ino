@@ -47,7 +47,6 @@ int calibrateY(){
       }
       
     }
-    Serial.println(digitalRead(yLimit));
     stepY(1, 0);
   }
   Serial.println("Calibration Failed...");
@@ -105,17 +104,18 @@ int goToCoords(int endxVal, int endyVal){
   Serial.println("Ending at coords:   ("+(String)endxVal + ", "+(String)endyVal+")");
   int xDelta = endxVal - xVal;
   int yDelta = endyVal - yVal;
-  
+  Serial.println(xDelta);
+  Serial.println(yDelta);
   if (xDelta > 0){
     stepX(xDelta, 1);
   } else{
-    stepX(xDelta, 0);
+    stepX(abs(xDelta), 0);
   }
   
   if (yDelta > 0){
     stepY(yDelta, 1);
   } else{
-    stepY(yDelta, 0);
+    stepY(abs(yDelta), 0);
   }
   Serial.println("Done moving!!");
 }
@@ -123,6 +123,13 @@ int goToCoords(int endxVal, int endyVal){
 void loop() {
   calibrateX();
   calibrateY();
+  goToCoords(5000,5000);
+  delay(3000);
+  goToCoords(10000,10000);
+  delay(3000);
+  goToCoords(5000,5000);
+  delay(3000);
+  goToCoords(10000,10000);
   //stepX(1800, 1);
   //stepY(1800, 0);
   //stepX(1800, 0);
