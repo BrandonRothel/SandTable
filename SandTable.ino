@@ -73,7 +73,6 @@ int calibrateX(){
 int stepY(int steps, int dir){
   digitalWrite(yDir, dir);
   for(int i = 0; i<steps; i++){
-        Serial.println(digitalRead(yLimit));
         digitalWrite(yStep, 1);
         delay(delayAmount);
         digitalWrite(yStep, 0);
@@ -101,8 +100,24 @@ int stepX(int steps, int dir){
       }
 }
 
-int goToCoords(int xVal, int yVal){
+int goToCoords(int endxVal, int endyVal){
+  Serial.println("Starting at coords: ("+(String)xVal + ", "+(String)yVal+")");
+  Serial.println("Ending at coords:   ("+(String)endxVal + ", "+(String)endyVal+")");
+  int xDelta = endxVal - xVal;
+  int yDelta = endyVal - yVal;
   
+  if (xDelta > 0){
+    stepX(xDelta, 1);
+  } else{
+    stepX(xDelta, 0);
+  }
+  
+  if (yDelta > 0){
+    stepY(yDelta, 1);
+  } else{
+    stepY(yDelta, 0);
+  }
+  Serial.println("Done moving!!");
 }
 
 void loop() {
