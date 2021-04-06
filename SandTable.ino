@@ -120,16 +120,70 @@ int goToCoords(int endxVal, int endyVal){
   Serial.println("Done moving!!");
 }
 
+int goToCoordsSameTime(int endxVal, int endyVal){
+  bool xDir;
+  bool yDir;
+  int ratio = 0;
+  int remainder = 0;
+  Serial.println("Starting at coords: ("+(String)xVal + ", "+(String)yVal+")");
+  Serial.println("Ending at coords:   ("+(String)endxVal + ", "+(String)endyVal+")");
+  int xDelta = endxVal - xVal;
+  int yDelta = endyVal - yVal;
+  
+  if (xDelta > 0){
+    xDir = 1;
+    //stepX(xDelta, 1);
+  } else{
+    xDir = 0;
+    //stepX(abs(xDelta), 0);
+  }
+  if (yDelta > 0){
+    yDir = 1;
+    //stepY(yDelta, 1);
+  } else{
+    yDir = 0;
+    //stepY(abs(yDelta), 0);
+  }
+  
+  xDelta = abs(xDelta);
+  yDelta = abs(yDelta);
+  
+  if(xDelta>yDelta){
+    ratio = xDelta/yDelta;
+    remainder = xDelta%yDelta;
+    for(int i=0; i<yDelta; i++){
+      stepY(1,yDir);
+      stepX(ratio,xDir);
+    }
+    stepY(remainder, yDir);
+    
+  } else if (xDelta<yDelta){
+    ratio = yDelta/xDelta;
+    remainder = yDelta%xDelta;
+    for(int i=0; i<xDelta; i++){
+      stepX(1,xDir);
+      stepY(ratio,yDir);
+    }
+    stepX(remainder, yDir);
+  } else {
+    stepX(xDelta, xDir);
+    stepY(yDelta, yDir);
+  }
+  Serial.println("Done moving!!");
+  Serial.println("Ending at coords:   ("+(String)xVal + ", "+(String)yVal+")");
+  Serial.println("waiting....");
+}
+
 void loop() {
   calibrateX();
   calibrateY();
-  goToCoords(5000,5000);
+  goToCoordsSameTime(5000,5000);
   delay(3000);
-  goToCoords(10000,10000);
+  goToCoordsSameTime(10000,10000);
   delay(3000);
-  goToCoords(5000,5000);
+  goToCoordsSameTime(5000,5000);
   delay(3000);
-  goToCoords(10000,10000);
+  goToCoordsSameTime(10000,10000);
   //stepX(1800, 1);
   //stepY(1800, 0);
   //stepX(1800, 0);
