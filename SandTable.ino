@@ -155,7 +155,7 @@ int goToCoordsSameTime(int endxVal, int endyVal){
       stepY(1,yDir);
       stepX(ratio,xDir);
     }
-    stepY(remainder, yDir);
+    stepX(remainder, xDir);
     
   } else if (xDelta<yDelta){
     ratio = yDelta/xDelta;
@@ -164,7 +164,7 @@ int goToCoordsSameTime(int endxVal, int endyVal){
       stepX(1,xDir);
       stepY(ratio,yDir);
     }
-    stepX(remainder, yDir);
+    stepY(remainder, yDir);
   } else {
     stepX(xDelta, xDir);
     stepY(yDelta, yDir);
