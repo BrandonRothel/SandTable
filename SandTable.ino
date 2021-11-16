@@ -1,5 +1,5 @@
-int xLimit = 9;
-int rLimit = 8;
+int rLimit = 9;
+int xLimit = 8;
 int rEnable = 6;
 int xEnable = 7;
 int xStep = 3;
@@ -12,8 +12,8 @@ int rVal = 0;
 int xVal = 0;
 
 //TODO: Find x and r max steps
-int rMax = 20850;
-int xMax = 21300;
+int rMax = 22000;
+int xMax = 10000;
 
 void setup() { 
   pinMode(rEnable, OUTPUT);
@@ -42,12 +42,13 @@ int calibrateR(){
       if (digitalRead(rLimit) == 0){
         Serial.println("R Calibration Successful!");
       rVal = 0;
-      stepR(rMax/2, 1);
+      stepR(rMax/2, 0);
       return 1;
       }
       
     }
-    stepR(1, 0);
+    stepR(1, 1);
+    Serial.println(digitalRead(rLimit));
   }
   Serial.println("Calibration Failed...");
   while(1){};
@@ -176,7 +177,10 @@ int stepX(int steps, int dir){
 
 void loop() {
   //calibrateX();
+  stepX(xMax,0);
   calibrateR();
+  stepX(xMax,1);
+  //stepR(rMax/2, 0);
 //  goToCoordsSameTime(5000,5000);
 //  delay(3000);
 //  goToCoordsSameTime(10000,10000);
