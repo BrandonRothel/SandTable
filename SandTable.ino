@@ -53,6 +53,9 @@ int calibrateR(){
 int stepR(int steps, int dir){
   digitalWrite(rDir, dir);
   for(int i = 0; i<steps; i++){
+        if(rVal>=rMax || abs(rVal)>=rMax){
+          return;
+        }
         digitalWrite(rStep, 1);
         delay(delayAmount);
         digitalWrite(rStep, 0);
@@ -80,11 +83,31 @@ int stepTheta(int steps, int dir){
       }
 }
 
+int goToCoords(int rValEnd, double thetaValEnd){
+  Serial.println("Starting at coords: ("+(String)rVal + ", "+(String)thetaVal+")");
+  Serial.println("Ending at coords:   ("+(String)rValEnd + ", "+(String)thetaValEnd+")");
+  int rValDir;
+  int distanceToR = abs(rVal-rValEnd);
+  if(rValEnd>rVal){
+    rValDir = 1;
+  } else {
+    rValDir = 0;    
+  }
+  int thetaValDir;
+  int distanceToTheta = abs(thetaVal-thetaValEnd);
+  if(thetaValEnd>thetaVal){
+    thetaValDir = 1;
+  } else {
+    thetaValDir = 0;    
+  }
+  stepR(distanceToR, rValDir);
+  stepTheta(distanceToTheta, thetaValDir);
+  
+}
+
 
 int spiral(int cw){
-  while(1){
-    
-  }
+
 }
 
 void loop() {
