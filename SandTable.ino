@@ -11,6 +11,7 @@ int rVal = 0;
 int thetaVal = 0;
 
 int rMax = 22000;
+int thetaMax = 13050;
 
 void setup() { 
   pinMode(rEnable, OUTPUT);
@@ -107,11 +108,15 @@ int goToCoords(int rValEnd, double thetaValEnd){
 
 
 int spiral(int cw){
-
+  while (rVal < (rMax-50)){
+    stepTheta(10,cw);
+    stepR(1,1);
+  }
 }
 
 void loop() {
-  calibrateR();
+  //calibrateR();
+  
   //spiral(1);
   
   while(1){}
