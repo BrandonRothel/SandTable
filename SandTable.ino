@@ -6,11 +6,11 @@ int thetaDir = 2;
 int rStep = 5;
 int rDir = 4;
 
-int delayAmount = 1;
+int delayAmount = 5;
 int rVal = 0;
 int thetaVal = 0;
 
-int rMax = 22000;
+int rMax = 11000;
 int thetaMax = 13050;
 
 void setup() { 
@@ -37,8 +37,8 @@ int calibrateR(){
       delay(3); //This delay and double check, filters out noise from stepper motors
       if (digitalRead(rLimit) == 0){
         Serial.println("R Calibration Successful!");
+      stepR(rMax, 0);
       rVal = 0;
-      stepR(rMax/2, 0);
       return 1;
       }
       
@@ -55,6 +55,7 @@ int stepR(int steps, int dir){
   digitalWrite(rDir, dir);
   for(int i = 0; i<steps; i++){
         if(rVal>=rMax || abs(rVal)>=rMax){
+          Serial.println("Out of bounds");
           return;
         }
         digitalWrite(rStep, 1);
@@ -66,6 +67,7 @@ int stepR(int steps, int dir){
         } else {
           rVal--;
         }
+        //Serial.println("rVal = "+rVal);
       }
 }
 
@@ -112,12 +114,17 @@ int spiral(int cw){
     stepTheta(10,cw);
     stepR(1,1);
   }
+  while (rVal > 0){
+    stepTheta(10,cw);
+    stepR(1,0);
+  }
 }
 
+
 void loop() {
-  //calibrateR();
-  
-  //spiral(1);
+  calibrateR();
+  spiral(0);
+  spiral(1);
   
   while(1){}
 }
