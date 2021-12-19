@@ -6,7 +6,7 @@ int thetaDir = 2;
 int rStep = 5;
 int rDir = 4;
 
-int delayAmount = 5;
+int delayAmount;
 int rVal = 0;
 int thetaVal = 0;
 
@@ -44,7 +44,7 @@ int calibrateR(){
       
     }
     stepR(1, 1);
-    Serial.println(digitalRead(rLimit));
+    //Serial.println(digitalRead(rLimit));
   }
   Serial.println("Calibration Failed...");
   while(1){};
@@ -86,7 +86,7 @@ int stepTheta(int steps, int dir){
       }
 }
 
-int goToCoords(int rValEnd, double thetaValEnd){
+int goToPolar(int rValEnd, double thetaValEnd){
   Serial.println("Starting at coords: ("+(String)rVal + ", "+(String)thetaVal+")");
   Serial.println("Ending at coords:   ("+(String)rValEnd + ", "+(String)thetaValEnd+")");
   int rValDir;
@@ -105,7 +105,7 @@ int goToCoords(int rValEnd, double thetaValEnd){
   }
   stepR(distanceToR, rValDir);
   stepTheta(distanceToTheta, thetaValDir);
-  
+  return;
 }
 
 
@@ -123,8 +123,20 @@ int spiral(int cw){
 
 void loop() {
   calibrateR();
-  spiral(0);
-  spiral(1);
+
+  goToPolar(0,0);
+  goToPolar(rMax/2, 0);
+  goToPolar(0,0);
+  goToPolar(rMax/2, thetaMax*0.25);
+  goToPolar(0,0);
+  goToPolar(rMax/2, thetaMax*0.50);
+  goToPolar(0,0);
+  goToPolar(rMax/2, thetaMax*0.75);
+  goToPolar(0,0);
+  goToPolar(rMax/2, 0);  
+  
+  //spiral(0);
+  //spiral(1);
   
   while(1){}
 }
