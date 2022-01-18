@@ -99,9 +99,9 @@ int goToPolarUnsync(int rValEnd, double thetaValEnd){
   int thetaValDir;
   int distanceToTheta = abs(thetaVal - thetaValEnd);
   if (thetaValEnd > thetaVal) {
-    thetaValDir = 0;
-  } else {
     thetaValDir = 1;
+  } else {
+    thetaValDir = 0;
   }
   //This ensures the theta motor chooses the shortest direction to the endpoint
   if (distanceToTheta > (thetaMax / 2)) {
@@ -209,14 +209,19 @@ int goToCartesian(double xVal, double yVal){
 
 void loop() {
   calibrateR();
-//  goToCartesian(5000, 5000);
-//  delay(1000);
-//  goToCartesian(5000,-5000);
-//  delay(1000);  
-//  goToCartesian(-5000,-5000);
-//  delay(1000);
-//  goToCartesian(-5000,5000);
-//  delay(10000000);
+  goToPolarUnsync(-rMax,0);
+  delay(2000000000);
+  goToPolarUnsync(rMax/2, thetaMax*0.25);
+  delay(2000);
+  goToPolarUnsync(0,0);
+  delay(2000);
+  goToPolarUnsync(rMax/2, thetaMax*0.50);
+  delay(2000);
+  goToPolarUnsync(0,0);
+  delay(2000);
+  goToPolarUnsync(rMax/2, thetaMax*0.75);
+  delay(200000);
+
 
   goToPolar(rMax / 2, thetaMax * 0.75);
   delay(2000);
