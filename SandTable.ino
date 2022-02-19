@@ -186,12 +186,15 @@ int goToPolar(int rValEnd, double thetaValEnd) {
 
 
 int spiral(int cw) {
-  while (rVal < (rMax - 50)) {
-    stepTheta(10, cw);
+  goToPolarUnsync(0,0);
+  //Outward spiral
+  while (rVal < (rMax - 100)) {
+    stepTheta(8, cw);
     stepR(1, 1);
   }
+  //Inward spiral
   while (rVal > 0) {
-    stepTheta(10, cw);
+    stepTheta(20, cw);
     stepR(1, 0);
   }
 }
@@ -209,36 +212,37 @@ int goToCartesian(double xVal, double yVal){
 
 void loop() {
   calibrateR();
-  goToPolarUnsync(-rMax,0);
-  delay(2000000000);
-  goToPolarUnsync(rMax/2, thetaMax*0.25);
-  delay(2000);
-  goToPolarUnsync(0,0);
-  delay(2000);
-  goToPolarUnsync(rMax/2, thetaMax*0.50);
-  delay(2000);
-  goToPolarUnsync(0,0);
-  delay(2000);
-  goToPolarUnsync(rMax/2, thetaMax*0.75);
-  delay(200000);
+  spiral(0);
+  spiral(1);
+//  goToPolarUnsync(-rMax,0);
+//  delay(2000000000);
+//  goToPolarUnsync(rMax/2, thetaMax*0.25);
+//  delay(2000);
+//  goToPolarUnsync(0,0);
+//  delay(2000);
+//  goToPolarUnsync(rMax/2, thetaMax*0.50);
+//  delay(2000);
+//  goToPolarUnsync(0,0);
+//  delay(2000);
+//  goToPolarUnsync(rMax/2, thetaMax*0.75);
+//  delay(200000);
+//
+//
+//  goToPolar(rMax / 2, thetaMax * 0.75);
+//  delay(2000);
+//  goToPolar(rMax / 2, 0);
+//  delay(2000);
+//  goToPolar(rMax / 2, thetaMax * 0.75);
+//  delay(2000);
+//  //goToPolar(0,0);
+//  goToPolar(rMax / 2, 0);
+//  delay(2000);
+//  goToPolar(rMax / 2, thetaMax * 0.75);
+//  delay(2000);
+//  //goToPolar(0,0);
+//  goToPolar(rMax / 2, 0);
+//  delay(2000);
 
-
-  goToPolar(rMax / 2, thetaMax * 0.75);
-  delay(2000);
-  goToPolar(rMax / 2, 0);
-  delay(2000);
-  goToPolar(rMax / 2, thetaMax * 0.75);
-  delay(2000);
-  //goToPolar(0,0);
-  goToPolar(rMax / 2, 0);
-  delay(2000);
-  goToPolar(rMax / 2, thetaMax * 0.75);
-  delay(2000);
-  //goToPolar(0,0);
-  goToPolar(rMax / 2, 0);
-  delay(2000);
-  //spiral(0);
-  //spiral(1);
 
   while (1) {}
 }
